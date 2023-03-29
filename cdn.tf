@@ -34,8 +34,8 @@ resource "azurerm_cdn_frontdoor_origin" "origin" {
   cdn_frontdoor_origin_group_id  = azurerm_cdn_frontdoor_origin_group.group[0].id
   enabled                        = true
   certificate_name_check_enabled = true
-  host_name                      = local.service_app.default.default_hostname
-  origin_host_header             = local.service_app.default.default_hostname
+  host_name                      = local.service_app.default_hostname
+  origin_host_header             = local.service_app.default_hostname
   http_port                      = 80
   https_port                     = 443
 }

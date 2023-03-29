@@ -1,9 +1,9 @@
-# Azure Web App Services Hosting terraform module
+# Azure Web App Service Hosting terraform module
 
 [![Terraform CI](./actions/workflows/continuous-integration-terraform.yml/badge.svg?branch=main)](./actions/workflows/continuous-integration-terraform.yml?branch=main)
 [![GitHub release](./releases)](./releases)
 
-This module creates and manages infrastructure to host App Services on Azure
+This module creates and manages [Azure Web App Services][1], deployed within an [Azure Virtual Network][2].
 
 ## Usage
 
@@ -13,7 +13,183 @@ Example module usage:
 module "azure_web_app_services_hosting" {
   source  = "github.com/DFE-Digital/terraform-azurerm-web-app-services-hosting?ref=v0.1.0"
 
-  environment = "dev/staging/test/pre-prod/prod/post-prod"
+  environment    = "dev"
+  project_name   = "myproject"
+  azure_location = "uksouth"
+
+  tags = {
+    "Foo" = "bar",
+  }
+
+  launch_in_vnet                = true
+  existing_virtual_network      = "vnet-id" # setting this will launch resources into this existing virtual network, rather than creating a new one.
+  existing_resource_group       = "resource-id" # setting this will launch resources into this existing resource group, rather than creating a new one.
+  virtual_network_address_space = "172.16.0.0/12"
+
+  service_plan_sku      = "S1"
+  service_plan_os       = "Windows"
+  service_stack         = "dotnet"
+  service_stack_version = "v4.0"
+  service_worker_count  = 1
+  service_app_settings  = {
+    "Foo" = "Bar"
+  }
+  service_health_check_path                 = "/"
+  service_health_check_eviction_time_in_min = 5
+  enable_service_logs                       = true
+  service_log_level                         = "Informational"
+  service_log_retention                     = 30
+  service_log_storage_sas_start             = "2023-03-22T00:00:00Z"
+  service_log_storage_sas_expiry            = "2024-03-22T00:00:00Z"
+
+  enable_dns_zone      = true
+  dns_zone_domain_name = "example.com"
+  dns_zone_soa_record  = {
+    email         = "hello.example.com"
+    host_name     = "ns1-03.azure-dns.com."
+    expire_time   = "2419200"
+    minimum_ttl   = "300"
+    refresh_time  = "3600"
+    retry_time    = "300"
+    serial_number = "1"
+    ttl           = "3600"
+  }
+  dns_a_records = {
+    "example" = {
+      ttl = 300,
+      records = [
+        "1.2.3.4",
+        "5.6.7.8",
+      ]
+    }
+  }
+  dns_alias_records = {
+    "alias-example" = {
+      ttl = 300,
+      target_resource_id = "azure_resource_id",
+    }
+  }
+  dns_aaaa_records = {
+    "aaaa-example" = {
+      ttl = 300,
+      records = [
+        "2001:db8::1:0:0:1",
+        "2606:2800:220:1:248:1893:25c8:1946",
+      ]
+    }
+  }
+  dns_caa_records = {
+    "caa-example" = {
+      ttl = 300,
+      records = [
+        {
+          flags = 0,
+          tag   = "issue",
+          value = "example.com"
+        },
+        {
+          flags = 0
+          tag   = "issuewild"
+          value = ";"
+        },
+        {
+          flags = 0
+          tag   = "iodef"
+          value = "mailto:caa@example.com"
+        }
+      ]
+    }
+  }
+  dns_cname_records = {
+    "cname-example" = {
+      ttl    = 300,
+      record = "example.com",
+    }
+  }
+  dns_mx_records = {
+    "mx-example" = {
+      ttl = 300,
+      records = [
+        {
+          preference = 10,
+          exchange   = "mail.example.com"
+        }
+      ]
+    }
+  }
+  dns_ns_records = {
+    "ns-example" = {
+      ttl = 300,
+      records = [
+        "ns-1.net",
+        "ns-1.com",
+        "ns-1.org",
+        "ns-1.info"
+      ]
+    }
+  }
+  dns_ptr_records = {
+    "ptr-example" = {
+      ttl = 300,
+      records = [
+        "example.com",
+      ]
+    }
+  }
+  dns_srv_records = {
+    "srv-example" = {
+      ttl = 300,
+      records = [
+        {
+          priority = 1,
+          weight   = 5,
+          port     = 8080
+          target   = target.example.com
+        }
+      ]
+    }
+  }
+  dns_txt_records = {
+    "txt-example" = {
+      ttl = 300,
+      records = [
+        "google-site-authenticator",
+        "more site information here"
+      ]
+    }
+  }
+
+  enable_cdn_frontdoor                         = true
+  restrict_web_app_service_to_cdn_inbound_only = true
+  cdn_frontdoor_sku                            = "Standard_AzureFrontDoor"
+  enable_cdn_frontdoor_health_probe            = true
+  cdn_frontdoor_health_probe_interval          = 30
+  cdn_frontdoor_health_probe_path              = "/"
+  cdn_frontdoor_response_timeout               = 120
+  cdn_frontdoor_custom_domains = [
+    "example.com",
+    "www.example.com"
+  ]
+  cdn_frontdoor_host_redirects = [
+    {
+      "from" = "example.com",
+      "to"   = "www.example.com",
+    }
+  ]
+  cdn_frontdoor_enable_rate_limiting              = true
+  cdn_frontdoor_rate_limiting_duration_in_minutes = 1
+  cdn_frontdoor_rate_limiting_threshold           = 300
+  cdn_frontdoor_rate_limiting_bypass_ip_list      = ["8.8.8.8/32"]
+  cdn_frontdoor_waf_mode                          = "Prevention"
+  cdn_frontdoor_host_add_response_headers = [
+    {
+      "name"  = "Strict-Transport-Security",
+      "value" = "max-age=31536000",
+    }
+  ]
+  cdn_frontdoor_remove_response_headers = [
+    "Server",
+  ]
 }
 ```
 
@@ -144,3 +320,6 @@ module "azure_web_app_services_hosting" {
 |------|-------------|
 | <a name="output_environment"></a> [environment](#output\_environment) | n/a |
 <!-- END_TF_DOCS -->
+
+[1]: https://azure.microsoft.com/en-us/products/app-service
+[2]: https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview

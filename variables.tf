@@ -110,7 +110,7 @@ variable "enable_service_logs" {
 variable "service_log_level" {
   description = "Service log level"
   type        = string
-  default     = "Informational"
+  default     = "Information"
 }
 
 variable "service_log_retention" {
@@ -165,6 +165,12 @@ variable "cdn_frontdoor_health_probe_path" {
   description = "Specifies the path relative to the origin that is used to determine the health of the origin."
   type        = string
   default     = "/"
+}
+
+variable "cdn_frontdoor_health_probe_request_type" {
+  description = "Specifies the type of health probe request that is made."
+  type        = string
+  default     = "GET"
 }
 
 variable "cdn_frontdoor_response_timeout" {

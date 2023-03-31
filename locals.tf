@@ -19,16 +19,27 @@ locals {
   service_plan_os       = var.service_plan_os
   service_stack         = var.service_stack
   service_stack_version = var.service_stack_version
-  service_app = local.service_plan_os == "Windows" ? azurerm_windows_web_app.default : (
-    local.service_plan_os == "Linux" ? azurerm_linux_web_app.default : null
+  service_app = local.service_plan_os == "Windows" ? azurerm_windows_web_app.default[0] : (
+    local.service_plan_os == "Linux" ? azurerm_linux_web_app.default[0] : null
   )
 
   service_worker_count = var.service_worker_count
 
   service_app_settings = var.service_app_settings
   service_app_insights_settings = {
-    "ApplicationInsights:ConnectionString"   = azurerm_application_insights.web_app_service.connection_string,
-    "ApplicationInsights:InstrumentationKey" = azurerm_application_insights.web_app_service.instrumentation_key
+    "APPLICATIONINSIGHTS_CONNECTION_STRING"           = azurerm_application_insights.web_app_service.connection_string,
+    "APPINSIGHTS_INSTRUMENTATIONKEY"                  = azurerm_application_insights.web_app_service.instrumentation_key,
+    "APPINSIGHTS_PROFILERFEATURE_VERSION"             = "1.0.0",
+    "APPINSIGHTS_SNAPSHOTFEATURE_VERSION"             = "1.0.0",
+    "ApplicationInsightsAgent_EXTENSION_VERSION"      = "~2",
+    "DiagnosticServices_EXTENSION_VERSION"            = "~3",
+    "InstrumentationEngine_EXTENSION_VERSION"         = "disabled",
+    "SnapshotDebugger_EXTENSION_VERSION"              = "disabled",
+    "XDT_MicrosoftApplicationInsights_BaseExtensions" = "disabled",
+    "XDT_MicrosoftApplicationInsights_Mode"           = "recommended",
+    "XDT_MicrosoftApplicationInsights_PreemptSdk"     = "disabled",
+    "XDT_MicrosoftApplicationInsights_Java"           = "1",
+    "XDT_MicrosoftApplicationInsights_NodeJS"         = "1",
   }
 
   service_health_check_path                 = var.service_health_check_path
@@ -43,13 +54,14 @@ locals {
   service_log_app_sas_url        = local.enable_service_logs ? "${azurerm_storage_account.logs[0].primary_blob_endpoint}${azurerm_storage_container.logs["app"].name}${data.azurerm_storage_account_blob_container_sas.logs["app"].sas}" : ""
   service_log_http_sas_url       = local.enable_service_logs ? "${azurerm_storage_account.logs[0].primary_blob_endpoint}${azurerm_storage_container.logs["http"].name}${data.azurerm_storage_account_blob_container_sas.logs["http"].sas}" : ""
 
-  enable_cdn_frontdoor                = var.enable_cdn_frontdoor
-  enable_cdn_frontdoor_health_probe   = var.enable_cdn_frontdoor_health_probe
-  cdn_frontdoor_sku                   = var.cdn_frontdoor_sku
-  cdn_frontdoor_health_probe_interval = var.cdn_frontdoor_health_probe_interval
-  cdn_frontdoor_health_probe_path     = var.cdn_frontdoor_health_probe_path
-  cdn_frontdoor_response_timeout      = var.cdn_frontdoor_response_timeout
-  cdn_frontdoor_custom_domains        = var.cdn_frontdoor_custom_domains
+  enable_cdn_frontdoor                    = var.enable_cdn_frontdoor
+  enable_cdn_frontdoor_health_probe       = var.enable_cdn_frontdoor_health_probe
+  cdn_frontdoor_sku                       = var.cdn_frontdoor_sku
+  cdn_frontdoor_health_probe_interval     = var.cdn_frontdoor_health_probe_interval
+  cdn_frontdoor_health_probe_path         = var.cdn_frontdoor_health_probe_path
+  cdn_frontdoor_health_probe_request_type = var.cdn_frontdoor_health_probe_request_type
+  cdn_frontdoor_response_timeout          = var.cdn_frontdoor_response_timeout
+  cdn_frontdoor_custom_domains            = var.cdn_frontdoor_custom_domains
   cdn_frontdoor_custom_domain_dns_names = local.enable_cdn_frontdoor && local.enable_dns_zone ? toset([
     for domain in local.cdn_frontdoor_custom_domains : replace(domain, local.dns_zone_domain_name, "") if endswith(domain, local.dns_zone_domain_name)
   ]) : []

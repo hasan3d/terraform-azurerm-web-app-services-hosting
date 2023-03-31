@@ -53,6 +53,14 @@ locals {
   service_log_types              = toset(["app", "http"])
   service_log_app_sas_url        = local.enable_service_logs ? "${azurerm_storage_account.logs[0].primary_blob_endpoint}${azurerm_storage_container.logs["app"].name}${data.azurerm_storage_account_blob_container_sas.logs["app"].sas}" : ""
   service_log_http_sas_url       = local.enable_service_logs ? "${azurerm_storage_account.logs[0].primary_blob_endpoint}${azurerm_storage_container.logs["http"].name}${data.azurerm_storage_account_blob_container_sas.logs["http"].sas}" : ""
+  service_diagnostic_setting_types = toset([
+    "AppServiceHTTPLogs",
+    "AppServiceConsoleLogs",
+    "AppServiceAppLogs",
+    "AppServiceAuditLogs",
+    "AppServiceIPSecAuditLogs",
+    "AppServicePlatformLogs"
+  ])
 
   enable_cdn_frontdoor                    = var.enable_cdn_frontdoor
   enable_cdn_frontdoor_health_probe       = var.enable_cdn_frontdoor_health_probe

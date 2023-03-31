@@ -25,6 +25,12 @@ variable "launch_in_vnet" {
   default     = true
 }
 
+variable "enable_nat_gateway" {
+  description = "Conditionally enable NAT Gateway. This is used to configure a static outbound IP. This is only avaiable when launching within a VNet."
+  type        = bool
+  default     = true
+}
+
 variable "existing_virtual_network" {
   description = "Conditionally use an existing virtual network. The `virtual_network_address_space` must match an existing address space in the VNet. This also requires the resource group name."
   type        = string

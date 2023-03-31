@@ -319,6 +319,9 @@ module "azure_web_app_services_hosting" {
 
 | Name | Description |
 |------|-------------|
+| <a name="output_azurerm_log_analytics_workspace_web_app_service"></a> [azurerm\_log\_analytics\_workspace\_web\_app\_service](#output\_azurerm\_log\_analytics\_workspace\_web\_app\_service) | Web App Service Log Analytics Workspace |
+| <a name="output_azurerm_resource_group_default"></a> [azurerm\_resource\_group\_default](#output\_azurerm\_resource\_group\_default) | Default Azure Resource Group |
+| <a name="output_azurerm_storage_account_logs"></a> [azurerm\_storage\_account\_logs](#output\_azurerm\_storage\_account\_logs) | Logs Storage Account |
 | <a name="output_environment"></a> [environment](#output\_environment) | n/a |
 <!-- END_TF_DOCS -->
 

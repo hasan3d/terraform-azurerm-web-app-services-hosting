@@ -201,6 +201,7 @@ module "azure_web_app_services_hosting" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.1 |
 | <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | >= 1.4.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.48.0 |
+| <a name="requirement_dns"></a> [dns](#requirement\_dns) | >= 3.2.4 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | >= 3.2.1 |
 
 ## Providers
@@ -208,6 +209,7 @@ module "azure_web_app_services_hosting" {
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.48.0 |
+| <a name="provider_dns"></a> [dns](#provider\_dns) | 3.2.4 |
 
 ## Resources
 
@@ -264,6 +266,7 @@ module "azure_web_app_services_hosting" {
 | [azurerm_resource_group.existing_resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
 | [azurerm_storage_account_blob_container_sas.logs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_account_blob_container_sas) | data source |
 | [azurerm_virtual_network.existing_virtual_network](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network) | data source |
+| [dns_a_record_set.web_app_service_ip_address](https://registry.terraform.io/providers/hashicorp/dns/latest/docs/data-sources/a_record_set) | data source |
 
 ## Inputs
 

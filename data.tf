@@ -10,3 +10,7 @@ data "azurerm_resource_group" "existing_resource_group" {
 
   name = local.existing_resource_group
 }
+
+data "dns_a_record_set" "web_app_service_ip_address" {
+  host = local.service_app.default_hostname
+}

@@ -63,6 +63,13 @@ locals {
     "AppServicePlatformLogs"
   ])
 
+  enable_monitoring            = var.enable_monitoring
+  monitor_endpoint_healthcheck = var.monitor_endpoint_healthcheck
+  monitor_http_availability_fqdn = local.enable_cdn_frontdoor ? (
+    length(local.cdn_frontdoor_custom_domains) >= 1 ? local.cdn_frontdoor_custom_domains[0] : azurerm_cdn_frontdoor_endpoint.endpoint[0].host_name
+  ) : local.service_app.default_hostname
+  monitor_http_availability_url = "https://${local.monitor_http_availability_fqdn}${local.monitor_endpoint_healthcheck}"
+
   enable_cdn_frontdoor                    = var.enable_cdn_frontdoor
   enable_cdn_frontdoor_health_probe       = var.enable_cdn_frontdoor_health_probe
   cdn_frontdoor_sku                       = var.cdn_frontdoor_sku

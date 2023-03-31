@@ -7,6 +7,7 @@ locals {
   tags = var.tags
 
   launch_in_vnet                     = var.launch_in_vnet
+  enable_nat_gateway                 = var.enable_nat_gateway
   existing_virtual_network           = var.existing_virtual_network
   existing_resource_group            = var.existing_resource_group
   virtual_network                    = local.existing_virtual_network == "" ? azurerm_virtual_network.default[0] : data.azurerm_virtual_network.existing_virtual_network[0]

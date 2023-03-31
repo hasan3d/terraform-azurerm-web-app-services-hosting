@@ -137,6 +137,18 @@ variable "service_log_storage_sas_expiry" {
   default     = ""
 }
 
+variable "enable_monitoring" {
+  description = "Create an App Insights instance and notification group for the Web App Service"
+  type        = bool
+  default     = false
+}
+
+variable "monitor_endpoint_healthcheck" {
+  description = "Specify a route that should be monitored for a 200 OK status"
+  type        = string
+  default     = "/"
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Web App default hostname as the origin."
   type        = bool

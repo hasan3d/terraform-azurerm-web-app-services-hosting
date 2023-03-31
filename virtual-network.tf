@@ -63,7 +63,7 @@ resource "azurerm_network_security_group" "web_app_service_infra_allow_frontdoor
     source_port_range          = "*"
     destination_port_range     = "443"
     source_address_prefix      = "AzureFrontDoor.Backend"
-    destination_address_prefix = ""
+    destination_address_prefix = "${data.dns_a_record_set.web_app_service_ip_address.addrs[0]}/32"
   }
 
   tags = local.tags

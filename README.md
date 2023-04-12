@@ -42,6 +42,15 @@ module "azure_web_app_services_hosting" {
   service_log_storage_sas_start             = "2023-03-22T00:00:00Z"
   service_log_storage_sas_expiry            = "2024-03-22T00:00:00Z"
 
+  # Monitoring is disabled by default. If enabled, the following metrics will be monitored:
+  # CPU usage, Memory usage, Latency, HTTP regional availability
+  enable_monitoring              = true
+  monitor_email_receivers        = [ "list@email.com" ]
+  monitor_endpoint_healthcheck   = "/"
+  monitor_enable_slack_webhook   = true
+  monitor_slack_webhook_receiver = "https://hooks.slack.com/services/xxx/xxx/xxx"
+  monitor_slack_channel          = "channel-name-or-id"
+
   enable_dns_zone      = true
   dns_zone_domain_name = "example.com"
   dns_zone_soa_record  = {

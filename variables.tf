@@ -251,6 +251,12 @@ variable "cdn_frontdoor_remove_response_headers" {
   default     = []
 }
 
+variable "cdn_frontdoor_origin_fqdn_override" {
+  description = "Manually specify the hostname that the CDN Front Door should target. Defaults to the App Service hostname"
+  type        = string
+  default     = ""
+}
+
 variable "enable_dns_zone" {
   description = "Conditionally create a DNS zone"
   type        = bool

@@ -63,8 +63,12 @@ locals {
     "AppServicePlatformLogs"
   ])
 
-  enable_monitoring            = var.enable_monitoring
-  monitor_endpoint_healthcheck = var.monitor_endpoint_healthcheck
+  enable_monitoring              = var.enable_monitoring
+  monitor_email_receivers        = var.monitor_email_receivers
+  monitor_enable_slack_webhook   = var.monitor_enable_slack_webhook
+  monitor_slack_webhook_receiver = var.monitor_slack_webhook_receiver
+  monitor_slack_channel          = var.monitor_slack_channel
+  monitor_endpoint_healthcheck   = var.monitor_endpoint_healthcheck
   monitor_http_availability_fqdn = local.enable_cdn_frontdoor ? (
     length(local.cdn_frontdoor_custom_domains) >= 1 ? local.cdn_frontdoor_custom_domains[0] : azurerm_cdn_frontdoor_endpoint.endpoint[0].host_name
   ) : local.service_app.default_hostname

@@ -143,6 +143,12 @@ variable "enable_monitoring" {
   default     = false
 }
 
+variable "monitor_email_receivers" {
+  description = "A list of email addresses that should be notified by monitoring alerts"
+  type        = list(string)
+  default     = []
+}
+
 variable "monitor_enable_slack_webhook" {
   description = "Enable slack webhooks to send monitoring notifications to a channel"
   type        = bool

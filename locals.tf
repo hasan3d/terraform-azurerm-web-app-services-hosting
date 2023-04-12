@@ -89,6 +89,7 @@ locals {
   cdn_frontdoor_waf_mode                          = var.cdn_frontdoor_waf_mode
   cdn_frontdoor_host_add_response_headers         = var.cdn_frontdoor_host_add_response_headers
   cdn_frontdoor_remove_response_headers           = var.cdn_frontdoor_remove_response_headers
+  cdn_frontdoor_origin_fqdn_override              = var.cdn_frontdoor_origin_fqdn_override != "" ? var.cdn_frontdoor_origin_fqdn_override : local.service_app.default_hostname
 
   ruleset_redirects_id               = length(local.cdn_frontdoor_host_redirects) > 0 ? [azurerm_cdn_frontdoor_rule_set.redirects[0].id] : []
   ruleset_add_response_headers_id    = length(local.cdn_frontdoor_host_add_response_headers) > 0 ? [azurerm_cdn_frontdoor_rule_set.add_response_headers[0].id] : []

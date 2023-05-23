@@ -207,7 +207,7 @@ module "azure_web_app_services_hosting" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.1 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.5 |
 | <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | >= 1.4.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.48.0 |
 | <a name="requirement_dns"></a> [dns](#requirement\_dns) | >= 3.2.4 |

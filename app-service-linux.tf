@@ -1,7 +1,7 @@
 resource "azurerm_linux_web_app" "default" {
   count = local.service_plan_os == "Linux" ? 1 : 0
 
-  name                = "${local.resource_prefix}default"
+  name                = local.resource_prefix
   resource_group_name = local.resource_group.name
   location            = local.resource_group.location
   service_plan_id     = azurerm_service_plan.default.id

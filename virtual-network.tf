@@ -3,7 +3,7 @@ resource "azurerm_virtual_network" "default" {
     local.launch_in_vnet ? 1 : 0
   ) : 0
 
-  name                = "${local.resource_prefix}default"
+  name                = "${local.resource_prefix}-default"
   address_space       = [local.virtual_network_address_space]
   location            = local.resource_group.location
   resource_group_name = local.resource_group.name
@@ -13,7 +13,7 @@ resource "azurerm_virtual_network" "default" {
 resource "azurerm_route_table" "default" {
   count = local.launch_in_vnet ? 1 : 0
 
-  name                          = "${local.resource_prefix}default"
+  name                          = "${local.resource_prefix}-default"
   location                      = local.resource_group.location
   resource_group_name           = local.resource_group.name
   disable_bgp_route_propagation = false
@@ -23,7 +23,7 @@ resource "azurerm_route_table" "default" {
 resource "azurerm_subnet" "web_app_service_infra_subnet" {
   count = local.launch_in_vnet ? 1 : 0
 
-  name                 = "${local.resource_prefix}webappserviceinfra"
+  name                 = "${local.resource_prefix}-webappserviceinfra"
   virtual_network_name = local.virtual_network.name
   resource_group_name  = local.resource_group.name
   address_prefixes     = [local.web_app_service_infra_subnet_cidr]
@@ -50,7 +50,7 @@ resource "azurerm_subnet_route_table_association" "web_app_service_infra_subnet"
 resource "azurerm_network_security_group" "web_app_service_infra_allow_frontdoor_inbound_only" {
   count = local.launch_in_vnet && local.restrict_web_app_service_to_cdn_inbound_only && local.enable_cdn_frontdoor ? 1 : 0
 
-  name                = "${local.resource_prefix}webappserviceinfransg"
+  name                = "${local.resource_prefix}-webappserviceinfransg"
   location            = local.resource_group.location
   resource_group_name = local.resource_group.name
 

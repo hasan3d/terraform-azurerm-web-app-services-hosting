@@ -1,7 +1,8 @@
 locals {
   environment     = var.environment
-  project_name    = var.project_name
-  resource_prefix = "${local.environment}${local.project_name}"
+  project_name    = "${var.project_name}-${local.environment}"
+  service_name    = "${var.service_name}-${local.environment}"
+  resource_prefix = local.service_name
   azure_location  = var.azure_location
 
   tags = var.tags

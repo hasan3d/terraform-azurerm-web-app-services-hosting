@@ -1,7 +1,7 @@
 resource "azurerm_cdn_frontdoor_profile" "cdn" {
   count = local.enable_cdn_frontdoor ? 1 : 0
 
-  name                     = "${local.resource_prefix}cdn"
+  name                     = "${local.resource_prefix}-cdn"
   resource_group_name      = local.resource_group.name
   sku_name                 = local.cdn_frontdoor_sku
   response_timeout_seconds = local.cdn_frontdoor_response_timeout
@@ -11,7 +11,7 @@ resource "azurerm_cdn_frontdoor_profile" "cdn" {
 resource "azurerm_cdn_frontdoor_origin_group" "group" {
   count = local.enable_cdn_frontdoor ? 1 : 0
 
-  name                     = "${local.resource_prefix}origingroup"
+  name                     = "${local.resource_prefix}-origingroup"
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.cdn[0].id
 
   load_balancing {}
@@ -43,7 +43,7 @@ resource "azurerm_cdn_frontdoor_origin" "origin" {
 resource "azurerm_cdn_frontdoor_endpoint" "endpoint" {
   count = local.enable_cdn_frontdoor ? 1 : 0
 
-  name                     = "${local.resource_prefix}cdnendpoint"
+  name                     = "${local.resource_prefix}-cdnendpoint"
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.cdn[0].id
   tags                     = local.tags
 }

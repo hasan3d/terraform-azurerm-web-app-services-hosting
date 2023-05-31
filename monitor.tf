@@ -9,7 +9,7 @@ resource "azurerm_application_insights" "web_app_service" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "web_app_service" {
-  name                       = "${local.resource_prefix}webappservice"
+  name                       = "${local.resource_prefix}-webappservice"
   target_resource_id         = local.service_app.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.web_app_service.id
 

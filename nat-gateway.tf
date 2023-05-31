@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "nat_gateway" {
   count = local.launch_in_vnet && local.enable_nat_gateway ? 1 : 0
 
-  name                = "${local.resource_prefix}natgateway"
+  name                = "${local.resource_prefix}-natgateway"
   location            = local.resource_group.location
   resource_group_name = local.resource_group.name
   allocation_method   = "Static"
@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "nat_gateway" {
 resource "azurerm_nat_gateway" "default" {
   count = local.launch_in_vnet && local.enable_nat_gateway ? 1 : 0
 
-  name                = "${local.resource_prefix}default"
+  name                = "${local.resource_prefix}-default"
   location            = local.resource_group.location
   resource_group_name = local.resource_group.name
   sku_name            = "Standard"

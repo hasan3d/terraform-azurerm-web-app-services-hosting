@@ -4,7 +4,12 @@ variable "environment" {
 }
 
 variable "project_name" {
-  description = "Project name. Will be used along with `environment` as a prefix for all resources."
+  description = "Project name. Will be used along with `environment` as a prefix for the resource group."
+  type        = string
+}
+
+variable "service_name" {
+  description = "Service name. Will be used along with `environment` as a prefix for all resources."
   type        = string
 }
 

@@ -43,10 +43,6 @@ resource "azurerm_linux_web_app" "default" {
         service_tag = "AzureFrontDoor.Backend"
       }
     }
-
-    identity {
-      type = "SystemAssigned"
-    }
   }
 
   dynamic "logs" {
@@ -76,6 +72,10 @@ resource "azurerm_linux_web_app" "default" {
     ignore_changes = [
       sticky_settings,
     ]
+  }
+
+  identity {
+    type = "SystemAssigned"
   }
 
   tags = local.tags

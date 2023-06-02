@@ -16,3 +16,8 @@ output "azurerm_storage_account_logs" {
   value       = local.enable_service_logs ? azurerm_storage_account.logs[0] : null
   description = "Logs Storage Account"
 }
+
+output "azurerm_linux_web_app_default" {
+  value       = azurerm_linux_web_app.default
+  description = "Default Azure Linux Web App"
+}

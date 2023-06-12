@@ -72,7 +72,7 @@ resource "azurerm_monitor_action_group" "web_app_service" {
 
   name                = "${local.resource_prefix}-actiongroup"
   resource_group_name = local.resource_group.name
-  short_name          = local.project_name
+  short_name          = substr(local.project_name, 0, 12)
   tags                = local.tags
 
   dynamic "email_receiver" {

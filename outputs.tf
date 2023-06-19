@@ -18,11 +18,12 @@ output "azurerm_storage_account_logs" {
 }
 
 output "azurerm_linux_web_app_default" {
-  value       = azurerm_linux_web_app.default
+  value       = azurerm_linux_web_app.default[0]
   description = "Default Azure Linux Web App"
 }
 
 output "azurerm_cdn_frontdoor_endpoint_endpoint" {
-  value       = azurerm_cdn_frontdoor_endpoint.endpoint
+  value       = azurerm_cdn_frontdoor_endpoint.endpoint[0]
   description = "Front Door (standard/premium) Endpoint"
 }
+
